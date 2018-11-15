@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Result from './Result';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state= {
+    this.state = {
       language: "",
       city: "",
       searchResult: []
@@ -19,42 +21,39 @@ class App extends Component {
   };
 
   searchJob = () => {
-
-    console.log(this.state);
+    const { language, city } = this.state;
+    fetch(`https://jobs.github.com/positions.json?description=${language}&location=${city}`)
+      .then(response => response.json())
+      .then(data => this.setState({
+        searchResult: data
+      }))
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edityfrhtyfdhtydfhgtd <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        <input 
-          type="text" 
-          placeholder="language" 
-          name="language"
-          value={this.state.language}
-          onChange={this.handleChange}
-          />
-        <input 
-          type="text" 
-          placeholder="city" 
-          name="city"
-          value={this.state.city}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.searchJob}>submit</button>
+        <img src={logo} className="App-logo" alt="logo" />
+          <h1>Search Job By Location</h1>
+          <div className="search-field">
+            <input
+              type="text"
+              placeholder="language"
+              name="language"
+              value={this.state.language}
+              onChange={this.handleChange}
+            />
+            <input
+              type="text"
+              placeholder="city"
+              name="city"
+              value={this.state.city}
+              onChange={this.handleChange}
+            />
+            <button onClick={this.searchJob}>search</button>
+          </div>
         </header>
+        <Result />
       </div>
     );
   }

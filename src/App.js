@@ -30,10 +30,12 @@ class App extends Component {
   }
 
   render() {
+    const { language, city, searchResult } = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <h1>Search Job By Location</h1>
           <div className="search-field">
             <input
@@ -53,7 +55,7 @@ class App extends Component {
             <button onClick={this.searchJob}>search</button>
           </div>
         </header>
-        <Result />
+        <Result language={language} city={city} result={searchResult}/>
       </div>
     );
   }

@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const jobController = require('./jobController');
-
 
 const PORT = 3300;
 
 app.use(bodyParser.json());
+app.use(cors());
 
 
 app.get('/', (req, res) => {
@@ -14,7 +15,11 @@ app.get('/', (req, res) => {
 })
 
 app.post('/searchJob', 
-  jobController.searchJob
+  jobController.searchJob,
+  (req, res) => {
+    const response = {...res.locals};
+    return res.status(200).json(response);
+  }
 );
 
 

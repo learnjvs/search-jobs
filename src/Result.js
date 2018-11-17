@@ -7,7 +7,7 @@ const Result = ({ language, city, result }) => {
   return (
   <div>
     <h3>{`Jobs using ${language} in ${city}`}</h3>
-    {result}
+    {JSON.stringify(result)}
     <div>
 
     </div>

@@ -20,13 +20,29 @@ class App extends Component {
     })
   };
 
-  searchJob = () => {
+  searchJob = async () => {
     const { language, city } = this.state;
-    fetch(`https://jobs.github.com/positions.json?description=${language}&location=${city}`)
-      .then(response => response.json())
-      .then(data => this.setState({
-        searchResult: data
-      }))
+    const url = 'http://localhost:3300/searchJob';
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        language,
+        city
+      })
+    }
+    try {
+      const response = await fetch(url, options);
+      const jobResult = await response.json();
+      this.setState({
+        searchResult: jobResult
+      })
+     } catch(e) {
+        alert(`Error in searchJob ${e}`);
+      };
+
   }
 
   render() {
@@ -42,20 +58,22 @@ class App extends Component {
               type="text"
               placeholder="language"
               name="language"
+              //defaultValue="python"
               value={this.state.language}
               onChange={this.handleChange}
-            />
+              />
             <input
               type="text"
               placeholder="city"
               name="city"
+              //defaultValue="culver city"
               value={this.state.city}
               onChange={this.handleChange}
             />
             <button onClick={this.searchJob}>search</button>
           </div>
         </header>
-        <Result language={language} city={city} result={searchResult}/>
+        <Result language={language} city={city} result={searchResult} />
       </div>
     );
   }

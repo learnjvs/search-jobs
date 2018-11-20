@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Result from './Result';
+import Listings from './Listings';
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: "",
-      city: "",
-      searchResult: []
+      language: "python",
+      city: "culver city",
+      listings: []
     }
   }
 
@@ -25,9 +25,7 @@ class App extends Component {
     const url = 'http://localhost:3300/searchJob';
     const options = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
+      headers: { "Content-Type": "application/json; charset=utf-8" },
       body: JSON.stringify({
         language,
         city
@@ -37,16 +35,17 @@ class App extends Component {
       const response = await fetch(url, options);
       const jobResult = await response.json();
       this.setState({
-        searchResult: jobResult
+        listings: jobResult.searchResult
       })
      } catch(e) {
-        alert(`Error in searchJob ${e}`);
+        console.log(`Error in searchJob ${e}`);
       };
 
   }
 
   render() {
-    const { language, city, searchResult } = this.state;
+    const { language, city, listings } = this.state;
+    console.log(this.state)
 
     return (
       <div className="App">
@@ -73,7 +72,7 @@ class App extends Component {
             <button onClick={this.searchJob}>search</button>
           </div>
         </header>
-        <Result language={language} city={city} result={searchResult} />
+        <Listings language={language} city={city} listings={listings} />
       </div>
     );
   }

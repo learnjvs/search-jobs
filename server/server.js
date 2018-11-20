@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const jobController = require('./jobController');
 
 const PORT = 3300;
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());  body-parser middleware is bundled in express 4.16.0
+app.use(express.json());
 app.use(cors());
 
 

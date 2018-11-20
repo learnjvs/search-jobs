@@ -18,9 +18,7 @@ const Listings = ({ language, city, listings }) => {
       location={listing.location}
       type={listing.type}
       company={listing.company}
-
-      
-      
+      company_logo={listing.company_logo}
       />
   })
     // and create a Job component for each listing

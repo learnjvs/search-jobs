@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const jobController = require('./jobController');
+const searchController = require('./searchController');
 const mongoose = require('mongoose');
 
 const PORT = 3300;
@@ -25,7 +25,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/searchJob', 
-  jobController.searchJob,
+  searchController.jobsList,
+  searchController.fetchJobsList,
   (req, res) => {
     const response = {...res.locals};
     return res.status(200).json(response);
